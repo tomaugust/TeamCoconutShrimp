@@ -18,10 +18,17 @@ module comparer_tb;
     $monitor("A = %b, B = %b, RESULT = %b, COUT = %b, ZERO = %b, SIGN = %b, , OVERFLOW = %b, EQL = %b, SLT = %b", A, B, RESULT, COUT, ZERO, SIGN, OVERFLOW, EQL, SLT);
 	#0 A = 1'b0; B = 1'b0; RESULT = 1'b0; COUT = 1'b0; ZERO = 1'b0; SIGN = 1'b0; OVERFLOW = 1'b0;
 	#1 A = 1'b0; B = 1'b0; RESULT = 1'b0; COUT = 1'b1; ZERO = 1'b0; SIGN = 1'b0; OVERFLOW = 1'b0;
+<<<<<<< HEAD
+	#1 A = 1'b0; B = 1'b0; RESULT = 1'b0; COUT = 1'b1; ZERO = 1'b0; SIGN = 1'b1; OVERFLOW = 1'b0; 
+	#1 A = 1'b0; B = 1'b0; RESULT = 1'b0; COUT = 1'b1; ZERO = 1'b0; SIGN = 1'b1; OVERFLOW = 1'b1;
+	#1 A = 1'b0; B = 1'b0; RESULT = 1'b1; COUT = 1'b1; ZERO = 1'b0; SIGN = 1'b1; OVERFLOW = 1'b0; 
+	#1 A = 1'b0; B = 1'b0; RESULT = 1'b1; COUT = 1'b1; ZERO = 1'b0; SIGN = 1'b1; OVERFLOW = 1'b1; 
+=======
 	#1 A = 1'b0; B = 1'b0; RESULT = 1'b0; COUT = 1'b1; ZERO = 1'b0; SIGN = 1'b0; OVERFLOW = 1'b0; 
 	#1 A = 1'b0; B = 1'b0; RESULT = 1'b0; COUT = 1'b1; ZERO = 1'b0; SIGN = 1'b0; OVERFLOW = 1'b1;
 	#1 A = 1'b0; B = 1'b0; RESULT = 1'b1; COUT = 1'b1; ZERO = 1'b0; SIGN = 1'b0; OVERFLOW = 1'b0; 
 	#1 A = 1'b0; B = 1'b0; RESULT = 1'b1; COUT = 1'b1; ZERO = 1'b0; SIGN = 1'b0; OVERFLOW = 1'b1; 
+>>>>>>> origin/master
   end
   
 endmodule
