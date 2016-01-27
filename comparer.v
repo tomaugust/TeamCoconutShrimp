@@ -20,10 +20,17 @@ module comparer(a, b, result, cout, zero, sign, overflow, eql , slt);
   );
 
   mux2_1b sltres(
+<<<<<<< HEAD
 	.a (sltu),
 	.b (slts),
 	.s (sign),
 	.z (slt)
+=======
+		.a (sltu),
+		.b (slts),
+		.s (sign),
+		.z (slt)
+>>>>>>> origin/master
 	);
  
 endmodule

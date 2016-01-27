@@ -6,6 +6,7 @@ module nor32_1b(a, z);
   wire [7:0] t2;
   wire [3:0] t3;
   wire [1:0] t4;
+  wire invz;
   
   genvar i;
   for (i = 0; i < 32; i = i + 2) begin
@@ -46,6 +47,11 @@ module nor32_1b(a, z);
   or_1b L5_GATE(
 	.a (t4[0]),
 	.b (t4[1]),
+	.z (invz)
+  );
+
+  not_1b L6_GATE(
+ 	.a (invz),
 	.z (z)
   );
   
