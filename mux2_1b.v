@@ -15,11 +15,7 @@ module mux2_1b(a,b,s,z);
 		.z (a1)
 	);
 	
-<<<<<<< HEAD
-	and_1b GATE_A12(
-=======
 	and_1b GATE_A2(
->>>>>>> origin/master
 		.a (b),
 		.b (s),
 		.z (a2)
