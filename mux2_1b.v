@@ -15,7 +15,7 @@ module mux2_1b(a,b,s,z);
 		.z (a1)
 	);
 	
-	and_1b GATE_A1(
+	and_1b GATE_A2(
 		.a (b),
 		.b (s),
 		.z (a2)
