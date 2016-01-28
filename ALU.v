@@ -6,7 +6,7 @@ module ALU(a, b, AddSel, ArithSel, ALUSel, CompSel, sign, z, overflow, zero, cfl
   output overflow, zero, cflag;
   
   wire [31:0] InvB, MuxB, AddBus, AndBus, OrBus, XorBus, LShiftBus, RShiftBus, CompBus;
-  wire cout, ZeroSig, EqlSig, SltSig, OverFlowSig, temp1, temp2, temp3;
+  wire cout, ZeroSig, EqlSig, SltSig, temp1, temp2, temp3;
   
   
   // Add/Sub Logic ///////////////
@@ -76,15 +76,15 @@ module ALU(a, b, AddSel, ArithSel, ALUSel, CompSel, sign, z, overflow, zero, cfl
 	.z (cflag)
   );
 
-  or_1b L1(
+  xor_1b L1(
 	.a (a[31]),
 	.b(AddBus[31]),
 	.z(temp1)
   );
 
-  or_1b L2(
+  xor_1b L2(
 	.a(a[31]),
-	.b(MuxB),
+	.b(MuxB[31]),
 	.z(temp2)
   );
 
@@ -96,7 +96,7 @@ module ALU(a, b, AddSel, ArithSel, ALUSel, CompSel, sign, z, overflow, zero, cfl
   and_1b ANDGATE(
 	.a(temp1),
 	.b(temp3),
-	.z(OverFlowSig)
+	.z(overflow)
   );
 
   // Comparison Logic ///////////////
@@ -111,9 +111,9 @@ module ALU(a, b, AddSel, ArithSel, ALUSel, CompSel, sign, z, overflow, zero, cfl
 	.b (b[31]),
 	.result (AddBus[31]),
 	.cout (cout),
-	.zero (ZeroSig),
+	.zero (zero),
 	.sign (sign),
-	.overflow (OverFlowSig),
+	.overflow (overflow),
 	.eql (EqlSig),
 	.slt (SltSig)
   );
@@ -139,5 +139,4 @@ module ALU(a, b, AddSel, ArithSel, ALUSel, CompSel, sign, z, overflow, zero, cfl
 	.z (z)
   );
 
-assign overflow = OverFlowSig;
 endmodule
