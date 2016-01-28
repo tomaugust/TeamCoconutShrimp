@@ -1,12 +1,12 @@
-module ALU(a, b, AddSel, ArithSel, ALUSel, lt, gt, eq, sign, z, overflow, zero);
+module ALU(a, b, AddSel, ArithSel, ALUSel, CompSel, sign, z, overflow, zero, cflag);
   input [31:0] a, b;
-  input [2:0] ALUSel;
-  input AddSel, ArithSel, lt, gt, eq, sign;
+  input [2:0] ALUSel, CompSel;
+  input AddSel, ArithSel, sign;
   output [31:0] z;
-  output overflow, zero;
+  output overflow, zero, cflag;
   
   wire [31:0] InvB, MuxB, AddBus, AndBus, OrBus, XorBus, LShiftBus, RShiftBus, CompBus;
-  wire cout;
+  wire cout, ZeroSig, EqlSig, SltSig, OverFlowSig, temp1, temp2, temp3;
   
   
   // Add/Sub Logic ///////////////
@@ -69,28 +69,62 @@ module ALU(a, b, AddSel, ArithSel, ALUSel, lt, gt, eq, sign, z, overflow, zero);
 	.arith (ArithSel),
 	.z (RShiftBus)
   );
+  //Flag Logic
+  xor_1b CARRY(
+	.a (AddSel),
+	.b (cout),
+	.z (cflag)
+  );
+
+  or_1b L1(
+	.a (a[31]),
+	.b(AddBus[31]),
+	.z(temp1)
+  );
+
+  or_1b L2(
+	.a(a[31]),
+	.b(MuxB),
+	.z(temp2)
+  );
+
+  not_1b INVL2(
+	.a(temp2),
+	.z(temp3)
+  );
   
-  
+  and_1b ANDGATE(
+	.a(temp1),
+	.b(temp3),
+	.z(OverFlowSig)
+  );
+
   // Comparison Logic ///////////////
   // INSERT COMPARISON BLOCK
+  nor32_1b ZERO_NOR(
+	.a (AddBus),
+	.z (zero)
+  );
+
   comparer COMP(
 	.a (a[31]),
 	.b (b[31]),
 	.result (AddBus[31]),
 	.cout (cout),
-	.zero (zero),
+	.zero (ZeroSig),
 	.sign (sign),
-	.overflow (overflow),
-	.eql ,
-	.slt ,
+	.overflow (OverFlowSig),
+	.eql (EqlSig),
+	.slt (SltSig)
   );
   
-  nor32_1b ZERO_NOR(
-	.a (AddBus),
-	.z (zero)
+  comp_dcd DECODE(
+	.ctrl (CompSel),
+	.less_in(SltSig),
+	.eql_in(EqlSig),
+	.z(CompBus)
   );
-  
-  
+
   // Output Select Logic ///////////////
   mux8_32b ALU_OUT(
 	.a (AddBus),
@@ -99,8 +133,11 @@ module ALU(a, b, AddSel, ArithSel, ALUSel, lt, gt, eq, sign, z, overflow, zero);
 	.d (XorBus),
 	.e (LShiftBus),
 	.f (RShiftBus),
-	.g ,
-	.h ,
+	.g (CompBus),
+	.h (),
 	.s (ALUSel),
 	.z (z)
   );
+
+assign overflow = OverFlowSig;
+endmodule
