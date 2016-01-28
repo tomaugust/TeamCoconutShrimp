@@ -27,7 +27,7 @@ module adder_1b(a, b, cin, sum, cout);
 	.z (a2)
   );
   
-  and_1b GATE_A3(
+  or_1b GATE_A3(
 	.a (a1),
 	.b (a2),
 	.z (cout)
